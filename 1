@@ -1,0 +1,73 @@
+# Do not modify these lines
+__winc_id__ = "04da020dedb24d42adf41382a231b1ed"
+__human_name__ = "classes"
+
+# Add your code after this line
+
+
+class Player:
+    def __init__(self, name, speed, endurance, accuracy) -> None:
+        self.name = name
+        if not (isinstance(speed, (int, float)) and 0 < speed <= 1):
+            raise ValueError("Speed must be between 0 and 1, got {speed}")
+        self.speed = speed
+        if not (isinstance(endurance, (int, float)) and 0 < endurance <= 1):
+            raise ValueError("Endurance must be between 0 and 1, got {endurance}")
+        self.endurance = endurance
+        if not (isinstance(accuracy, (int, float)) and 0 < accuracy <= 1):
+            raise ValueError("Accuracy must be between 0 and 1, got {accuracy}")
+        self.accuracy = accuracy
+
+    def introduce(self):
+        return "Hello everyone, my name is {self.name}"
+
+    def strength(self):
+        attributes = ["speed", "endurance", "accuracy"]
+        highest_value = 0
+        highest_attr = None
+        for attr in attributes:
+            value = getattr(self, attr)
+            if value > highest_value:
+                highest_value = value
+                highest_attr = attr
+            if highest_attr == "accuracy":
+                return highest_attr, highest_value
+        return highest_attr, highest_value
+
+
+class Commentator(Player):
+    def __init__(self, name) -> None:
+        super().__init__(name)
+
+    def sum_player(self):
+        return self.speed + self.endurance + self.accuracy
+
+    @classmethod
+    def compare_players(cls, p1, p2, attr):
+        p1_attr = getattr(p1, attr)
+        p2_attr = getattr(p2, attr)
+        if p1_attr > p2_attr:
+            return p1
+        elif p2_attr > p1_attr:
+            return p2
+        elif p1_attr == p2_attr:
+            p1_strong = p1.strength()
+            p2_strong = p2.strength()
+            if p1_strong > p2_strong:
+                return p1
+            elif p2_strong > p1_strong:
+                return p2
+            elif p1_strong == p2_strong:
+                p1_sum = p1.sum_player()
+                p2_sum = p2.sum_player()
+                if p1_sum > p2_sum:
+                    return p1
+                elif p2_sum > p1_sum:
+                    return p2
+                elif p1_sum == p2_sum:
+                    return "These two players might as well be twins"
+
+
+if __name__ == "__main__":
+    pass
+
