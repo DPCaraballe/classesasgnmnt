@@ -19,7 +19,7 @@ class Player:
         self.accuracy = accuracy
 
     def introduce(self):
-        return "Hello everyone, my name is {self.name}"
+        return f"Hello everyone, my name is {self.name}"
 
     def strength(self):
         attributes = ["speed", "endurance", "accuracy"]
@@ -33,14 +33,6 @@ class Player:
             if highest_attr == "accuracy":
                 return highest_attr, highest_value
         return highest_attr, highest_value
-
-
-class Commentator(Player):
-    def __init__(self, name) -> None:
-        super().__init__(name)
-
-    def sum_player(self):
-        return self.speed + self.endurance + self.accuracy
 
     @classmethod
     def compare_players(cls, p1, p2, attr):
@@ -68,6 +60,9 @@ class Commentator(Player):
                     return "These two players might as well be twins"
 
 
-if __name__ == "__main__":
-    pass
+class Commentator:
+    def __init__(self, name) -> None:
+        self.name = name
 
+    def sum_player(self):
+        return self.speed + self.endurance + self.accuracy
